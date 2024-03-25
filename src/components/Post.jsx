@@ -8,13 +8,20 @@ import {
   Flex,
   useToast,
 } from "@chakra-ui/react";
-import { FaRegComment, FaRegHeart, FaTrash } from "react-icons/fa";
+import {
+  FaComment,
+  FaHeart,
+  FaRegComment,
+  FaRegHeart,
+  FaTrash,
+} from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { useAuth } from "../auth/AuthProvider";
 import useUser from "../hooks/useUser";
 import useDeletePost from "../hooks/useDeletePost";
 import { Link } from "react-router-dom";
 import useComments from "../hooks/useFetchComments";
+import useLikePost from "../hooks/useLikePost";
 
 const Post = ({ post }) => {
   const { id, content, createdAt, userName, avatarURL, likes, userId } = post;
@@ -27,6 +34,10 @@ const Post = ({ post }) => {
   const handleDelete = async () => {
     const success = await deletePost(userId, id);
   };
+
+  const isLiked = likes.includes(currentUser.uid);
+
+  const { toggleLike, isLoading:likeLoading } = useLikePost(userId,id, isLiked, currentUser.uid);
 
   const renderContent = (content) => {
     return content.split("\n").map((line, index) => {
@@ -70,14 +81,15 @@ const Post = ({ post }) => {
           {formatDistanceToNow(createdAt.toDate())} ago
         </Text>
 
-        <Flex justify={'space-between'} >
-          <Flex align={"center"} gap={0} >
+        <Flex justify={"space-between"}>
+          <Flex align={"center"} gap={0}>
             <IconButton
+            isLoading={likeLoading}
               aria-label="Like"
-              icon={<Icon as={FaRegHeart} />}
+              icon={isLiked ? <FaHeart /> : <FaRegHeart />}
               variant="ghost"
-              colorScheme="primary"
-              // onClick={handleLike}
+              colorScheme="red"
+              onClick={toggleLike}
             />
             <Text fontSize="sm" color="gray.500" m={0}>
               {likes.length}
@@ -87,9 +99,9 @@ const Post = ({ post }) => {
           <Flex align={"center"} gap={0}>
             <IconButton
               aria-label="Comment"
-              icon={<Icon as={FaRegComment} />}
+              icon={comments.length > 0 ? <FaComment /> : <FaRegComment />}
               variant="ghost"
-              colorScheme="primary"
+              colorScheme="blue"
               mr="2"
               as={Link}
               to={`/posts/${userId}/${id}`}
