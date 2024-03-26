@@ -45,7 +45,7 @@ const Profile = () => {
           </Text>
           <HStack>
             <Text fontSize={['md',"lg"]}>Posts: {posts.length}</Text>
-            <Text fontSize={['sm',"2xl"]} w={'max-content'}>
+            <Text fontSize={['md',"lg"]} w={'max-content'}>
               Joined:{" "}
               {user
                 ? formatDate(new Date(user?.date), "dd MMMM yyyy")
