@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   FormControl,
@@ -10,15 +10,9 @@ import {
 import useCreatePost from "../hooks/useCreatePost";
 import { useAuth } from "../auth/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import { Input } from "postcss";
 
 const NewPost = () => {
   const [postContent, setPostContent] = useState("");
-  const [image, setImage] = useState(null);
-  const fileInptRef = useRef()
-  const handleChange = (e) => {
-    setImage(e.target.files[0]);
-  };
 
   const { currentUser } = useAuth();
   const { createPost, loading, error } = useCreatePost();
@@ -47,7 +41,7 @@ const NewPost = () => {
       return;
     }
 
-    const success = await createPost(currentUser, postContent, image);
+    const success = await createPost(currentUser, postContent);
     if (success) {
       toast({
         title: "Success",
@@ -56,7 +50,6 @@ const NewPost = () => {
         duration: 3000,
         isClosable: true,
       });
-      fileInptRef.current.value = ''
       setPostContent("");
     } else {
       console.log(error);
@@ -67,7 +60,6 @@ const NewPost = () => {
         duration: 3000,
         isClosable: true,
       });
-      fileInptRef.current.value = ''
     }
   };
 
@@ -83,15 +75,6 @@ const NewPost = () => {
           placeholder="What's on your mind?"
         />
       </FormControl>
-
-      <input
-        type="file"
-        id="imageUpload"
-        accept="image/*"
-        ref={fileInptRef}
-        onChange={handleChange}
-      />
-
       <Button
         onClick={handleCreatePost}
         isLoading={loading}

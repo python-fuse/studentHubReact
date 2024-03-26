@@ -8,7 +8,6 @@ import {
   Flex,
   useToast,
   HStack,
-  Image,
 } from "@chakra-ui/react";
 import {
   FaComment,
@@ -26,8 +25,7 @@ import useComments from "../hooks/useFetchComments";
 import useLikePost from "../hooks/useLikePost";
 
 const Post = ({ post }) => {
-  const { id, image, content, createdAt, userName, avatarURL, likes, userId } =
-    post;
+  const { id, content, createdAt, userName, avatarURL, likes, userId } = post;
   const { currentUser } = useAuth();
   const { user } = useUser(userId);
   const { deletePost } = useDeletePost();
@@ -63,9 +61,7 @@ const Post = ({ post }) => {
       <Flex align="center" mb="2">
         <Avatar size="sm" name={avatarURL} src={user?.avatar} />
         <Box ml="2">
-          <Text fontWeight="bold" as={Link} to={`/users/${userId}`}>
-            {user?.username}
-          </Text>
+          <Text fontWeight="bold" as={Link} to={`/users/${userId}`}>{user?.username}</Text>
           <Text fontSize="xs" color="gray.500">
             @{user?.username}
           </Text>
@@ -86,11 +82,6 @@ const Post = ({ post }) => {
       </Flex>
 
       <Text>{renderContent(content)}</Text>
-      {image ? (
-        <Image mt={2} src={image} w={"100%"} rounded={"lg"} alt="post image" />
-      ) : (
-        ""
-      )}
       <Flex mt="2" justify="space-between" align="center">
         <Text fontSize="sm" color="gray.500">
           {formatDistanceToNow(createdAt.toDate())} ago

@@ -6,7 +6,7 @@ import { FaUser } from "react-icons/fa";
 import useUser from "../hooks/useUser";
 
 const Header = () => {
-  const { logout, currentUser,loading } = useAuth();
+  const { logout, currentUser } = useAuth();
   const navigate = useNavigate();
   const {user} = useUser(currentUser.uid)
   const signout = async () => {
@@ -34,7 +34,7 @@ const Header = () => {
         Student Hub
       </Text>
       <HStack>
-        <Button fontSize={12} isLoading={loading}  display={['flex','none']} size={"sm"} gap={2} colorScheme="blue" p={3} as={Link} to={`/users/${currentUser.uid}`}>
+        <Button fontSize={12}  display={'flex'} size={"sm"} gap={2} colorScheme="blue" p={3} as={Link} to={`/users/${currentUser.uid}`}>
           <FaUser/>
           {user?.username}
         </Button>
