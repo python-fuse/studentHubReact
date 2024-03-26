@@ -29,7 +29,7 @@ const Profile = () => {
   if (postsLoading) return "Loading...";
 
   return (
-    <VStack w={"100%"} p={2} align={"start"}>
+    <VStack w={"100%"} p={2} align={"start"} overflowX={'hidden'}>
       <IconButton
         icon={<FaArrowLeft />}
         colorScheme="blue"
@@ -37,15 +37,15 @@ const Profile = () => {
         onClick={() => navigate(-1)}
         size={"sm"}
       />
-      <HStack px={20} align={'left'} gap={4} w={"100%"}>
+      <HStack px={2} mt={4} align={'left'} gap={4} w={"100%"}>
         <Avatar size={['lg',"xl"]} name={user?.username} src={user?.avatar} />
         <VStack align={"start"}>
           <Text fontSize={['lg',"2xl"]} fontWeight={"bold"}>
             {user?.username}
           </Text>
-          <HStack w={'max-content'}>
+          <HStack>
             <Text fontSize={['md',"lg"]}>Posts: {posts.length}</Text>
-            <Text fontSize={['sm',"2xl"]} >
+            <Text fontSize={['sm',"2xl"]} w={'max-content'}>
               Joined:{" "}
               {user
                 ? formatDate(new Date(user?.date), "dd MMMM yyyy")
