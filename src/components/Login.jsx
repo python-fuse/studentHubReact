@@ -152,9 +152,9 @@ const Login = () => {
             mb="4"
           />
           <Button
-            className={loading ? "cursor-not-allowed" : ""}
-            isLoading={loading}
+            className={loading ? "cursor-not-allowed animate-bounce" : ""}
             loadingText={'Logging in'}
+            isLoading={loading}
             colorScheme="blue"
             type="submit"
             w="100%"

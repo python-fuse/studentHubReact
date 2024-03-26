@@ -6,25 +6,22 @@ export default function useUser(userId) {
   const [user, setUser] = useState(null);
   const [isLoading, setLoading] = useState(false);
 
-  useEffect(()=>{
-
-    const getUser =  async() => {
+  useEffect(() => {
+    const getUser = async () => {
       const userRef = doc(db, "users", userId);
       setLoading(true);
 
-      const userSnapshot = await getDoc(userRef)
-      if(userSnapshot.exists()){
+      const userSnapshot = await getDoc(userRef);
+      if (userSnapshot.exists()) {
         setUser(userSnapshot.data());
         setLoading(false);
+      } else {
+        return "loading...";
       }
-      else{
-        return 'loading...';
-      }
-      setLoading(false)
-      
+      setLoading(false);
     };
 
     getUser();
-  },[user])
+  }, [user]);
   return { user, isLoading };
 }
