@@ -37,15 +37,15 @@ const Profile = () => {
         onClick={() => navigate(-1)}
         size={"sm"}
       />
-      <HStack px={20} gap={4} w={"100%"}>
-        <Avatar size={"xl"} name={user?.username} src={user?.avatar} />
+      <HStack px={20} align={'left'} gap={4} w={"100%"}>
+        <Avatar size={['lg',"xl"]} name={user?.username} src={user?.avatar} />
         <VStack align={"start"}>
-          <Text fontSize={"2xl"} fontWeight={"bold"}>
+          <Text fontSize={['lg',"2xl"]} fontWeight={"bold"}>
             {user?.username}
           </Text>
-          <HStack>
-            <Text>Posts: {posts.length}</Text>
-            <Text>
+          <HStack w={'max-content'}>
+            <Text fontSize={['md',"lg"]}>Posts: {posts.length}</Text>
+            <Text fontSize={['sm',"2xl"]} >
               Joined:{" "}
               {user
                 ? formatDate(new Date(user?.date), "dd MMMM yyyy")
@@ -67,11 +67,11 @@ const Profile = () => {
           ""
         )}
       </HStack>
-      <Divider w={"100%"} colorScheme="blue" my={5} />
+      <Divider  my={5} />
 
       <EditProfile isOpen={isOpen} onClose={onClose} user={user} />
 
-      <VStack spacing="4" align="stretch" p="4" w={"lg"} mx="auto">
+      <VStack spacing="4" align="stretch" p="4" w={['md','lg']} mx="auto">
         {posts.length > 0 ? (
           posts.map((post) => <Post key={post.id} post={post} />)
         ) : (
