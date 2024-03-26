@@ -106,7 +106,7 @@ const Signup = () => {
             type="text"
             value={username}
             placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value.toLocaleLowerCase())}
             mb="4"
           />
           <Input

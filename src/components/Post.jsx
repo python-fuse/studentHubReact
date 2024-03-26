@@ -7,6 +7,7 @@ import {
   Icon,
   Flex,
   useToast,
+  HStack,
 } from "@chakra-ui/react";
 import {
   FaComment,
@@ -37,7 +38,12 @@ const Post = ({ post }) => {
 
   const isLiked = likes.includes(currentUser.uid);
 
-  const { toggleLike, isLoading:likeLoading } = useLikePost(userId,id, isLiked, currentUser.uid);
+  const { toggleLike, isLoading: likeLoading } = useLikePost(
+    userId,
+    id,
+    isLiked,
+    currentUser.uid
+  );
 
   const renderContent = (content) => {
     return content.split("\n").map((line, index) => {
@@ -55,7 +61,7 @@ const Post = ({ post }) => {
       <Flex align="center" mb="2">
         <Avatar size="sm" name={avatarURL} src={user?.avatar} />
         <Box ml="2">
-          <Text fontWeight="bold">{user?.username}</Text>
+          <Text fontWeight="bold" as={Link} to={`/users/${userId}`}>{user?.username}</Text>
           <Text fontSize="xs" color="gray.500">
             @{user?.username}
           </Text>
@@ -81,10 +87,11 @@ const Post = ({ post }) => {
           {formatDistanceToNow(createdAt.toDate())} ago
         </Text>
 
-        <Flex justify={"space-between"}>
-          <Flex align={"center"} gap={0}>
+        <Flex p={1} gap={3}>
+          <HStack alignItems={"center"} gap={0}>
             <IconButton
-            isLoading={likeLoading}
+              isRound
+              isLoading={likeLoading}
               aria-label="Like"
               icon={isLiked ? <FaHeart /> : <FaRegHeart />}
               variant="ghost"
@@ -94,23 +101,23 @@ const Post = ({ post }) => {
             <Text fontSize="sm" color="gray.500" m={0}>
               {likes.length}
             </Text>
-          </Flex>
+          </HStack>
 
-          <Flex align={"center"} gap={0}>
+          <HStack alignItems={"center"} gap={0}>
             <IconButton
+              isRound
               aria-label="Comment"
               icon={comments.length > 0 ? <FaComment /> : <FaRegComment />}
               variant="ghost"
               colorScheme="blue"
-              mr="2"
               as={Link}
               to={`/posts/${userId}/${id}`}
             />
 
-            <Text fontSize="sm" color="gray.500">
+            <Text fontSize="sm" color="gray.500" m={0}>
               {comments.length}
             </Text>
-          </Flex>
+          </HStack>
         </Flex>
       </Flex>
     </Box>

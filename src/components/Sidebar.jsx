@@ -10,9 +10,9 @@ const ActiveUser = () => {
 
   return (
     <Stack align={"center"} spacing={"2"} my={8}>
-      <Avatar size={"xl"} name={user?.username} src={user?.avatar} />
+      <Avatar boxShadow={'lg'} colorScheme="blue" size={"2xl"} name={user?.username} src={user?.avatar} />
       <Code>@{user?.username}</Code>
-      <Button colorScheme="blue" w={"full"}>
+      <Button colorScheme="blue" w={"full"} as={Link} to={`/users/${currentUser.uid}`}>
         Edit Profile
       </Button>
     </Stack>

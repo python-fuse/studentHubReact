@@ -1,7 +1,7 @@
 import { Center, IconButton, Spinner, VStack } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import Post from "./Post";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useFetchPost from "../hooks/useFetchPost";
 import { FaArrowLeft } from "react-icons/fa";
 import CommenttList from "./CommenttList";
@@ -10,6 +10,7 @@ import NewComment from "./NewComment";
 const CommentPage = () => {
   const { uid, postId } = useParams();
   const { fetchPost, post, loading } = useFetchPost();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!loading) {
@@ -23,9 +24,8 @@ const CommentPage = () => {
       <IconButton
         icon={<FaArrowLeft />}
         colorScheme="blue"
-        as={Link}
         w={10}
-        to={"/"}
+        onClick={() => navigate(-1)}
         size={"sm"}
       />
       {post ? (

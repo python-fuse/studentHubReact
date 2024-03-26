@@ -3,7 +3,7 @@ import { db } from "../firebase/firebase";
 import {
   collection,
   query,
-  where, onSnapshot
+  where, onSnapshot, orderBy
 } from "firebase/firestore";
 
 const useComments = (postId) => {
@@ -12,14 +12,13 @@ const useComments = (postId) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Ensure postId is defined before creating the query
     if (!postId) {
       setLoading(false);
       return;
     }
 
     const commentsRef = collection(db, "comments");
-    const q = query(commentsRef, where("postId", "==", postId));
+    const q = query(commentsRef, where("postId", "==", postId),orderBy('date','asc'));
 
     const unsubscribe = onSnapshot(
       q,
@@ -33,6 +32,7 @@ const useComments = (postId) => {
       },
       (error) => {
         setError(error);
+        console.log(error);
         setLoading(false);
       }
     );
